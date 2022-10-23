@@ -1,0 +1,54 @@
+% a(0,N,s(N)).
+% a(s(M), 0, X) :- a(M, s(0), X).
+% a(s(M), s(N), X) :- a(s(M), N, Y), a(M, Y, X).
+
+% likes(mary,redwine).
+% likes(X,wine):-likes(X,redwine).
+
+% ds(0,1).
+% ds(1,2).
+% ds(2,3).
+% ds(3,4).
+% ds(4,5).
+% ds(5,6).
+% ds(6,7).
+% ds(7,8).
+% ds(8,9).
+
+% lt(A,B):-ds(A,B).
+% lt(A,B):-ds(A,C),lt(C,B).
+
+
+nat(a).
+nat(b).
+eq(succ(a),succ(b)).
+
+% Successor of a natural number is a natural number
+impl(nat(X),nat(succ(X))).
+% define induction
+P(succ(X)):-P(0), P(X), impl(P(X),P(succ(X))).
+% 0 is a natural number
+nat(0).
+% Identify Nature of Equality
+eq(X,X):-nat(X).
+% Associative Nature of Equality
+eq(Y,X):-nat(X), nat(Y), eq(X,Y).
+% Transitive Nature of Equality
+eq(X,Z):-nat(X), nat(Y), nat(Z), eq(X,Y), eq(Y,Z).
+% Type Nature of Equality
+nat(Y):-nat(X), eq(X,Y).
+% Equality of succ(X), succ(Y) implies equality of X, Y
+eq(X,Y):-nat(X), nat(Y), eq(succ(X),succ(Y)).
+% No nat has 0 as its successor
+not(eq(succ(X),0)):-nat(X).
+
+% hasproperty enables quantification over predicates but must be defined per predicate
+% hasproperty(X,nat):-nat(X).
+
+% 0 is a natural number
+% nat(0).
+
+% Successor of a natural number is a natural number
+% impl(hasproperty(X,nat),hasproperty(succ(X),nat)).
+% define induction
+% hasproperty(succ(X),P):-hasproperty(0,P), hasproperty(X,P), impl(hasproperty(X,P),hasproperty(succ(X),P)).
